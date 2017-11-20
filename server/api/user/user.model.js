@@ -16,13 +16,13 @@ export default function(sequelize, DataTypes) {
       autoIncrement: true
     },
     name: DataTypes.STRING,
-    email: {
+    username: {
       type: DataTypes.STRING,
       unique: {
-        msg: 'The specified email address is already in use.'
+        msg: 'The specified username is already in use.'
       },
       validate: {
-        isEmail: true
+        notEmpty: true
       }
     },
     role: {

@@ -27,7 +27,7 @@ export function index(req, res) {
     attributes: [
       '_id',
       'name',
-      'email',
+      'username',
       'role',
       'provider'
     ]
@@ -127,7 +127,7 @@ export function me(req, res, next) {
     attributes: [
       '_id',
       'name',
-      'email',
+      'username',
       'role',
       'provider'
     ]
