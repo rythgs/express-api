@@ -2,14 +2,14 @@
 // @flow
 interface User {
   name: string;
-  email: string;
+  username: string;
   password: string;
 }
 
 export default class LoginController {
   user: User = {
     name: '',
-    email: '',
+    username: '',
     password: ''
   };
   errors = {login: undefined};
@@ -28,7 +28,7 @@ export default class LoginController {
 
     if (form.$valid) {
       this.Auth.login({
-        email: this.user.email,
+        username: this.user.username,
         password: this.user.password
       })
       .then(() => {
