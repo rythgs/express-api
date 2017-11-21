@@ -12,7 +12,9 @@ module.exports = {
       logging: false,
       storage: 'dev.sqlite',
       define: {
-        timestamps: false
+        timestamps: true,
+        paranoid: true,
+        underscored: true
       }
     }
   },
