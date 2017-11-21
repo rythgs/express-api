@@ -5,6 +5,7 @@
 'use strict';
 
 import express from 'express';
+import helmet from 'helmet';
 import favicon from 'serve-favicon';
 import morgan from 'morgan';
 import shrinkRay from 'shrink-ray';
@@ -23,6 +24,8 @@ var Store = expressSequelizeSession(session.Store);
 
 export default function(app) {
   var env = app.get('env');
+
+  app.use(helmet());
 
   if(env === 'development' || env === 'test') {
     app.use(express.static(path.join(config.root, '.tmp')));
