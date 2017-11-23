@@ -71,7 +71,7 @@ export function show(req, res, next) {
     }
   })
     .then(user => {
-      if(!user) {
+      if (!user) {
         return res.status(404).end();
       }
       res.json(user.profile);
@@ -105,7 +105,7 @@ export function changePassword(req, res) {
     }
   })
     .then(user => {
-      if(user.authenticate(oldPass)) {
+      if (user.authenticate(oldPass)) {
         user.password = newPass;
         return user.save()
           .then(() => {
@@ -137,7 +137,7 @@ export function me(req, res, next) {
     ]
   })
     .then(user => { // don't ever give out the password or salt
-      if(!user) {
+      if (!user) {
         return res.status(401).end();
       }
       res.json(user);
