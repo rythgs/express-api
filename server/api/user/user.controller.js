@@ -4,6 +4,8 @@ import {User} from '../../sqldb';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
 
+import * as utils from '../../components/utils';
+
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
   return function(err) {
@@ -18,20 +20,22 @@ function handleError(res, statusCode) {
   };
 }
 
+const defaultAttributes = [
+  '_id',
+  'name',
+  'username',
+  'role',
+  'provider'
+];
+
 /**
  * Get list of users
  * restriction: 'admin'
  */
 export function index(req, res) {
-  return User.findAll({
-    attributes: [
-      '_id',
-      'name',
-      'username',
-      'role',
-      'provider'
-    ]
-  })
+  const params = utils.createFilter(req);
+  params.attributes = defaultAttributes;
+  return User.findAll(params)
     .then(users => {
       res.status(200).json(users);
     })
