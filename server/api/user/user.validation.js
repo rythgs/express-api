@@ -8,6 +8,12 @@ export default Object.assign({}, commonValidation, {
       password: Joi.string()
     }
   },
+  passwordChange: {
+    body: {
+      newPassword: Joi.string().required(),
+      oldPassword: Joi.string().required()
+    }
+  },
   create: {
     body: {
       name: Joi.string().required(),

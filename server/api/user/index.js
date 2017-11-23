@@ -11,7 +11,7 @@ var router = new Router();
 router.get('/', auth.hasRole('admin'), validate(validation.list), controller.index);
 router.delete('/:id', auth.hasRole('admin'), controller.destroy);
 router.get('/me', auth.isAuthenticated(), controller.me);
-router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
+router.put('/:id/password', auth.isAuthenticated(), validate(validation.passwordChange), controller.changePassword);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', auth.hasRole('admin'), validate(validation.create), controller.create);
 
