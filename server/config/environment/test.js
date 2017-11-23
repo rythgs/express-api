@@ -15,7 +15,6 @@ module.exports = {
       storage: 'test.sqlite',
       define: {
         timestamps: true,
-        paranoid: false,
         underscored: true
       }
     }

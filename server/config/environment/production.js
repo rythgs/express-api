@@ -22,7 +22,6 @@ module.exports = {
       storage: 'dist.sqlite',
       define: {
         timestamps: true,
-        paranoid: true,
         underscored: true
       }
     }
