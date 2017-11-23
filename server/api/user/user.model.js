@@ -107,16 +107,16 @@ export default function(sequelize, DataTypes) {
           return this.password === this.encryptPassword(password);
         }
 
-        var _this = this;
+        var self = this;
         this.encryptPassword(password, function(err, pwdGen) {
           if (err) {
-            callback(err);
+            return callback(err);
           }
 
-          if (_this.password === pwdGen) {
-            callback(null, true);
+          if (self.password === pwdGen) {
+            return callback(null, true);
           } else {
-            callback(null, false);
+            return callback(null, false);
           }
         });
       },
@@ -134,11 +134,11 @@ export default function(sequelize, DataTypes) {
         let callback;
         let defaultByteSize = 16;
 
-        if (typeof arguments[0] === 'function') {
-          callback = arguments[0];
+        if (typeof args[0] === 'function') {
+          callback = args[0];
           byteSize = defaultByteSize;
-        } else if (typeof arguments[1] === 'function') {
-          callback = arguments[1];
+        } else if (typeof args[1] === 'function') {
+          callback = args[1];
         } else {
           throw new Error('Missing Callback');
         }
@@ -149,7 +149,7 @@ export default function(sequelize, DataTypes) {
 
         return crypto.randomBytes(byteSize, function(err, salt) {
           if (err) {
-            callback(err);
+            return callback(err);
           }
           return callback(null, salt.toString('base64'));
         });
@@ -181,7 +181,7 @@ export default function(sequelize, DataTypes) {
         return crypto.pbkdf2(password, salt, defaultIterations, defaultKeyLength, 'sha256',
           function(err, key) {
             if (err) {
-              callback(err);
+              return callback(err);
             }
             return callback(null, key.toString('base64'));
           });
