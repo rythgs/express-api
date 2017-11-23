@@ -1,6 +1,7 @@
-const Joi = require('joi');
+import Joi from 'joi';
+import commonValidation from '../../components/validation';
 
-export default {
+export default Object.assign({}, commonValidation, {
   login: {
     body: {
       username: Joi.string().required(),
@@ -15,4 +16,4 @@ export default {
       role: Joi.string()
     }
   }
-};
+});
