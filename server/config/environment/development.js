@@ -13,7 +13,6 @@ module.exports = {
       storage: 'dev.sqlite',
       define: {
         timestamps: true,
-        paranoid: false,
         underscored: true
       }
     }
