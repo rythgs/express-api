@@ -132,3 +132,14 @@ export function destroy(req, res) {
     .then(removeEntity(res))
     .catch(handleError(res));
 }
+
+
+export function upload(req, res) {
+  try {
+    console.log(req.file);
+    res.send('uploaded ' + req.file.originalname + ' as ' + req.file.filename + ' Size: ' + req.file.size);
+  } catch (err) {
+    console.log(err.message);
+    res.sendStatus(400);
+  }
+}
