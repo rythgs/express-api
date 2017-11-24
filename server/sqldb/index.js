@@ -4,7 +4,7 @@
 
 'use strict';
 
-import path from 'path';
+// import path from 'path';
 import config from '../config/environment';
 import Sequelize from 'sequelize';
 
@@ -14,6 +14,7 @@ var db = {
 };
 
 // Insert models below
+db.Job = db.sequelize.import('../api/job/job.model');
 db.Thing = db.sequelize.import('../api/thing/thing.model');
 db.User = db.sequelize.import('../api/user/user.model');
 
