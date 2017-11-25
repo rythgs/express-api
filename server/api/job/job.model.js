@@ -1,7 +1,7 @@
 'use strict';
 
 export default function(sequelize, DataTypes) {
-  return sequelize.define('Job', {
+  const Job = sequelize.define('Job', {
     _id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -11,5 +11,16 @@ export default function(sequelize, DataTypes) {
     name: DataTypes.STRING,
     info: DataTypes.STRING,
     active: DataTypes.BOOLEAN
+  }, {
+    classMethods: {
+      associate(models) {
+        Job.belongsToMany(models.User, {
+          onDelete: 'cascade',
+          through: 'users_jobs'
+        });
+      }
+    },
   });
+
+  return Job;
 }
