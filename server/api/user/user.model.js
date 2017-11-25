@@ -40,6 +40,15 @@ export default function(sequelize, DataTypes) {
 
   }, {
 
+    classMethods: {
+      associate(models) {
+        User.belongsToMany(models.Job, {
+          onDelete: 'cascade',
+          through: 'users_jobs'
+        });
+      }
+    },
+
     /**
      * Virtual Getters
      */
