@@ -8,6 +8,9 @@ var router = express.Router();
 import path from 'path';
 import multer from 'multer';
 
+import * as auth from '../../auth/auth.service';
+import { Job } from '../../sqldb';
+
 const upload = multer({
   dest: './uploads',
   fileFilter(req, file, callback) {
@@ -23,7 +26,7 @@ const upload = multer({
 
 router.post('/upload', upload.single('thumbnail'), controller.upload);
 
-router.get('/', controller.index);
+router.get('/', auth.roleBasedFilter(Job), controller.index);
 router.get('/:id', controller.show);
 router.post('/', controller.create);
 router.put('/:id', controller.upsert);
