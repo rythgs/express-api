@@ -84,3 +84,48 @@ export function setTokenCookie(req, res) {
   res.cookie('token', token);
   res.redirect('/');
 }
+
+export function roleBasedFilter(Model) {
+  return compose()
+    .use(isAuthenticated())
+    .use((req, res, next) => {
+      if (!req.user.role) {
+        return res.status(403).send('Forbidden');
+      }
+
+      switch (req.user.role) {
+        case 'admin':
+          break;
+        case 'data':
+          const groupField = getRelateionFieldName(Model, 'Gropus');
+          if (groupField) {
+            req.query = Object.assign(req.query, {
+              filter: [{ [groupField]: req.user.group_id }],
+            });
+          }
+          break;
+        case 'user':
+        default:
+          const userField = getRelateionFieldName(Model, 'Users');
+          if (userField) {
+            req.query = Object.assign(req.query, {
+              filter: [{ [userField]: req.user._id }],
+            });
+          }
+          break;
+      }
+      return next();
+    });
+}
+
+function getRelateionFieldName(Model, targetModel) {
+  let name = false;
+  for (let attr of Model.rawAttributes) {
+    if (attr.references && attr.references.model === targetModel) {
+      name = attr.fieldName;
+      break;
+    }
+  }
+
+  return name;
+}

@@ -5,7 +5,7 @@ import _ from 'lodash';
 export function createFilter(req) {
   const params = {};
 
-  if (!_.isEmpty(req.query.fields)) {
+  if (req.query.fields) {
     params.attributes = req.query.fields;
   }
 
@@ -17,14 +17,4 @@ export function createFilter(req) {
   console.log(params);
 
   return params;
-}
-
-export function appendRoleDefaultFilter(req, params = {}) {
-  if (
-    !_.isEmpty(req.user)
-    && !_.isEmpty(req.user._id)
-    && req.user.role === 'data'
-  ) {
-    params.where.push({ group_id: req.user.group_id });
-  }
 }
