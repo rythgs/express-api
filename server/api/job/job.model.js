@@ -16,7 +16,7 @@ export default function(sequelize, DataTypes) {
       associate(models) {
         Job.belongsToMany(models.User, {
           onDelete: 'cascade',
-          through: 'users_jobs'
+          through: 'jobs_users'
         });
       }
     },
