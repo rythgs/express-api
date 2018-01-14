@@ -20,6 +20,7 @@ import passport from 'passport';
 import session from 'express-session';
 import sqldb from '../sqldb';
 import expressSequelizeSession from 'express-sequelize-session';
+import accessLogger from '../components/logger/access-logger';
 var Store = expressSequelizeSession(session.Store);
 
 export default function(app) {
@@ -37,7 +38,7 @@ export default function(app) {
 
   app.set('appPath', path.join(config.root, 'client'));
   app.use(express.static(app.get('appPath')));
-  app.use(morgan('dev'));
+  app.use(morgan('combined', { stream: accessLogger.stream }));
 
   app.set('views', `${config.root}/server/views`);
   app.engine('html', require('ejs').renderFile);
@@ -64,20 +65,20 @@ export default function(app) {
    * Lusca - express server security
    * https://github.com/krakenjs/lusca
    */
-  if (env !== 'test' && !process.env.SAUCE_USERNAME) {
-    app.use(lusca({
-      csrf: {
-        angular: true
-      },
-      xframe: 'SAMEORIGIN',
-      hsts: {
-        maxAge: 31536000, //1 year, in seconds
-        includeSubDomains: true,
-        preload: true
-      },
-      xssProtection: true
-    }));
-  }
+  // if (env !== 'test' && !process.env.SAUCE_USERNAME) {
+  //   app.use(lusca({
+  //     csrf: {
+  //       angular: true
+  //     },
+  //     xframe: 'SAMEORIGIN',
+  //     hsts: {
+  //       maxAge: 31536000, //1 year, in seconds
+  //       includeSubDomains: true,
+  //       preload: true
+  //     },
+  //     xssProtection: true
+  //   }));
+  // }
 
   if (env === 'development') {
     const webpackDevMiddleware = require('webpack-dev-middleware');
